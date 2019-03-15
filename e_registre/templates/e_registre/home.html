@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load my_filters %}
+ 
+{% block main %}
+ 
+		<div class="form-group">
+			<div class="row">
+				<div class="col-lg-3 col-md-3 col-sm-3">
+					<select name="categorie" id="categorie" class="form-control">
+						<option value="etudiant">Etudiants</option>
+						<option value="enseignant">Enseignants</option>
+						<option value="personnel">Personnels</option>
+						<option value="autre">Autres visiteurs</option>
+					</select>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<input id="mysearch" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="name" required>
+				</div>
+			</div>
+		</div>
+
+	<table class="table table-bordered">
+		<tr>
+			<th>Nom</th>
+			<th>Arrivée</th>
+			<th>Départ</th>
+		</tr>
+
+		<tbody id="ajax-response">
+		{% include 'layout/ajax_home.html' %}
+		</tbody>
+
+	</table>
+ 
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		$(".btn-arrivee").on("click", function () {
+			window.curr_tag = this;
+			$.ajax({
+				url : "visites/nouveau/{{cate}}/" + window.curr_tag.value + "/",
+				type : 'GET',
+				dataType : 'text',
+				success : function(rep, statut){
+					$(window.curr_tag.nextElementSibling).text(rep);
+				},
+				error : function(resultat, statut, erreur){
+					console.log(erreur);
+					alert("erreur AJAX");
+				},
+			});
+			$(this).attr("disabled", true);
+		});
+		$(".btn-depart").on("click", function () {
+			var arrivee = this.parentElement.previousElementSibling.firstElementChild;
+			window.tag = this;
+			$.ajax({
+				url : "visites/fin/{{cate}}/" + window.tag.value + "/",
+				type : 'GET',
+				dataType : 'text',
+				success : function(rep, statut){
+					$(window.tag.nextElementSibling).text(rep);
+				},
+				error : function(resultat, statut, erreur){
+					console.log(erreur);
+					alert("erreur AJAX");
+				},
+			});
+			$(arrivee).attr("disabled", true);
+			$(this).attr("disabled", true);
+		});
+		$("#categorie").on("change", function () {
+			console.log(this.value);
+			$.get("?categorie="+this.value, function (data) {
+				// console.log(data);
+				$("#ajax-response").html(data);
+			});
+		});
+
+		$("#mysearch").on("keyup", function () {
+			url = "?categorie="+this.parentElement.parentElement.firstElementChild.firstElementChild.value+"&name="+this.value;
+			console.log(url);
+			$.get(url, function (data) {
+				// console.log(data);
+				$("#ajax-response").html(data);
+			});
+		});
+
+	</script>
+{% endblock %}

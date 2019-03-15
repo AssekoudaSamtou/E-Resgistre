@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Liste des Etudiants
+{% endblock %}
+
+{% block main %}
+
+    <h5><i class="fas fa-chart-line"></i> Liste des {{cate}}s</h5>
+    <hr>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Sexe</th>
+            <th>Telephone</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for personne in personnes %}
+            <tr>
+                <td><i class="fas fa-user"></i>
+                    <a href="{% url 'e_registre:detail' categorie=cate id=personne.id %}">
+                        {{ personne.nom }}
+                    </a>
+                </td>
+                <td title="">{{ personne.prenom}}</td>
+                <td>{{ personne.sexe }}</td>
+                <td>{{ personne.telephone }}</td>
+
+            </tr>
+        {% empty %}
+            <tr class="text-center">
+                <td colspan="4">Il n'existe aucune personne.</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <div >
+        <button class="btn btn-primary"><a href="{% url 'e_registre:ajouter' cate %}">Ajouter nouveau</a></button>
+    </div>
+
+{% endblock %}

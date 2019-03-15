@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+	{% load static %}
+ 
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title %}E-Registre{% endblock %}</title>
+ 
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="{% static 'e_registre/css/bootstrap.min.css' %}" >
+ 
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="{% static 'e_registre/css/bootstrap-select.min.css' %}" >
+ 
+	<link href="{% static 'e_registre/css/all.css' %}" rel="stylesheet">
+ 
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+ 
+	<link rel="stylesheet" href="{% static 'e_registre/css/main.css' %}">
+	<link rel="stylesheet" href="{% static 'e_registre/css/default.css' %}">
+</head>
+<body>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top entete">
+	<div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+				<a class="navbar-brand" href="{% url 'e_registre:home' %}">E-Registre</a>
+		</div>
+ 
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li {% if request.path == '/personnels' %}class='active'{% endif %} >
+					<a href="{% url 'e_registre:liste' 'personnel' %}">Personnel</a>
+				</li>
+				<li {% if request.path == '/ensaignants' %}class='active'{% endif %} >
+					<a href="{% url 'e_registre:liste' 'enseignant' %}">Enseignant</a>
+				</li>
+				<li {% if request.path == '/etudiants/' %}class='active'{% endif %}>
+					<a href="{% url 'e_registre:liste' 'etudiant' %}">Etudiants<span class="sr-only">(current)</span></a>
+				</li>
+				<li {% if request.path == '/visiteurs/' %}class='active'{% endif %}>
+					<a href="{% url 'e_registre:liste' 'autre' %}">Visiteurs</a>
+				</li>
+				<!-- <li {% if request.path == '/contact/' %}class='active'{% endif %}>
+					<a href="">Contact</a>
+				</li> -->
+			</ul>
+ 
+			<form action="" class="navbar-form navbar-left" method="get">
+				<div class="form-group">
+					<input type="text" name="query" class="form-control" placeholder="Search" value="" disabled="">
+				</div>
+			</form>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+					   aria-haspopup="true" aria-expanded="false">
+						{% if request.user.is_authenticated %}
+							{{ request.user.username|upper }}
+						{% else %}
+							GUEST
+						{% endif %}
+						<span class="caret"></span>
+					</a>
+					{% if request.user.is_authenticated %}
+						<ul class="dropdown-menu">
+							<li><a href="http://localhost:8000/admin/">admin</a></li>
+							<li><a href="">Account Details</a></li>
+							<li><a href="">Settings</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="">Logout</a></li>
+						</ul>
+					{% else %}
+						<ul class="dropdown-menu">
+							<li><a href="">Sign Up</a></li>
+							<li><a href="">Login</a></li>
+						</ul>
+					{% endif %}
+				</li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>
+ 
+ 
+<div class="container">
+ 
+	<div class="row">
+ 
+		<div class="col-lg-9 col-md-9">
+ 
+			{% if not request.user.is_authenticated and not request.path == '/login/'  %}
+				<p class="alert alert-info">
+					<a href="" class="alert-link">Login</a> to access other cool features.
+				</p>
+			{% endif %}
+ 
+ 
+			{% block main %}
+				{#  override this block in the child template  #}
+			{% endblock %}
+ 
+		</div>
+ 
+		<div class="col-lg-3 col-md-3 text-center hidden-sm hidden-xs">
+			<p>Visites Recentes</p>
+ 
+			<div class="list-group">
+				<a href="#" class="list-group-item">
+					<h5 class="list-group-item-heading"><span class="fas fa-globe"
+						"></span> Wisdom</h5>
+					<p class="list-group-item-text">21 sec ago.</p>
+				</a>
+ 
+				<a href="#" class="list-group-item">
+					<h5 class="list-group-item-heading"><span class="fas fa-globe"
+						"></span> Christophe</h5>
+					<p class="list-group-item-text">21 sec ago.</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h5 class="list-group-item-heading"><span class="fas fa-globe"
+						"></span> DeLaCruz</h5>
+					<p class="list-group-item-text">21 sec ago.</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h5 class="list-group-item-heading"><span class="fas fa-globe"
+						"></span> Batako</h5>
+					<p class="list-group-item-text">21 sec ago.</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h5 class="list-group-item-heading"><span class="fas fa-globe"
+						"></span> Balakim</h5>
+					<p class="list-group-item-text">21 sec ago.</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h5 class="list-group-item-heading"><span class="fas fa-globe"
+						"></span> Nobody</h5>
+					<p class="list-group-item-text">21 sec ago.</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h5 class="list-group-item-heading"><span class="fas fa-globe"
+						"></span> Sam</h5>
+					<p class="list-group-item-text">21 sec ago.</p>
+				</a>
+				<a href="#" class="list-group-item">
+					<h5 class="list-group-item-heading"><span class="fas fa-globe"
+						"></span> MHD</h5>
+					<p class="list-group-item-text">21 sec ago.</p>
+				</a>
+			</div>
+ 
+		</div>
+	</div>
+</div>
+ 
+<hr>
+ 
+<footer>
+	<div class="social-icons">
+		<div class="container text-center">
+			<ul class="list-inline">
+				<li class="list-inline-item social-github">
+					<a href="https://github.com/">
+						<i class="fab fa-github"></i>
+					</a>
+				</li>
+				<li class="list-inline-item social-twitter">
+					<a href="https://twitter.com/">
+						<i class="fab fa-twitter-square"></i>
+					</a>
+				</li>
+				<li class="list-inline-item social-facebook">
+					<a href="https://www.facebook.com/">
+						<i class="fab fa-facebook-square"></i>
+					</a>
+				</li>
+				<li class="list-inline-item social-google-plus">
+					<a href="https://plus.google.com/">
+						<i class="fab fa-google-plus-g"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+ 
+	<div class="main-footer">
+		<div class="container text-center">
+			<ul>
+				<li><a href="#">Source Code</a></li>
+				<li><a href="#">OverIQ</a></li>
+				<li><a href="#">Contact</a></li>
+				<li><a href="#">Other Tutorials</a></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+ 
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="{% static 'e_registre/js/jquery.js' %}"></script>
+ 
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- Latest compiled and minified JavaScript -->
+<script src='{% static "e_registre/js/bootstrap.min.js" %}'></script>
+ 
+<!-- Latest compiled and minified JavaScript -->
+<script src='{% static "e_registre/js/bootstrap-select.min.js" %}'></script>
+ 
+<script>
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
+	})
+ 
+</script>
+
+{% block scripts %}{% endblock %}
+ 
+</body>
+</html>

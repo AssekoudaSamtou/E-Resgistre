@@ -1,0 +1,34 @@
+{% load static %}
+{% load my_filters %}
+{% for personne in personnes %}
+<tr>
+	<td>
+		<i class="fas fa-user"></i>
+		<a href="{% url 'e_registre:detail' categorie=cate id=personne.id %}">
+			{{ personne.nom }} {{ personne.prenom}}
+		</a>
+	</td>
+
+	<th class="tes">
+		<button class="btn btn-success btn-arrivee" value="{{ personne.id }}"  {% if personnes|item:personne|item:0 %}disabled{% endif %}>
+			Maintenant
+		</button>
+		<em class="heure-arrivee">{{ personnes|item:personne|item:0 }}</em>
+
+		{% if personnes|item:personne|item:0 and personnes|item:personne|item:1 %}
+		<button class="btn btn-primary new-visite">New</button>
+		{% endif %}
+
+	</th>
+	<th>
+		<button class="btn btn-danger btn-depart" value="{{ personne.id }}" {% if personnes|item:personne|item:1 %}disabled{% endif %}>
+			Maintenant
+		</button>
+		<em class="heure-depart">{{ personnes|item:personne|item:1 }}</em>
+	</th>
+</tr>
+{% empty %}
+<tr class="text-center">
+	<td colspan="4">Oups!!!</td>
+</tr>
+{% endfor %}
