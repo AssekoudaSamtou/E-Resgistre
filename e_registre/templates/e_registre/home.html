@@ -4,21 +4,21 @@
  
 {% block main %}
  
-		<div class="form-group">
-			<div class="row">
-				<div class="col-lg-3 col-md-3 col-sm-3">
-					<select name="categorie" id="categorie" class="form-control">
-						<option value="etudiant">Etudiants</option>
-						<option value="enseignant">Enseignants</option>
-						<option value="personnel">Personnels</option>
-						<option value="autre">Autres visiteurs</option>
-					</select>
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-6">
-					<input id="mysearch" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="name" required>
-				</div>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-sm-3">
+				<select name="categorie" id="categorie" class="form-control">
+					<option value="etudiant">Etudiants</option>
+					<option value="enseignant">Enseignants</option>
+					<option value="personnel">Personnels</option>
+					<option value="autre">Autres visiteurs</option>
+				</select>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6">
+				<input id="mysearch" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="name" required>
 			</div>
 		</div>
+	</div>
 
 	<table class="table table-bordered">
 		<tr>
@@ -37,6 +37,13 @@
 
 {% block scripts %}
 	<script type="text/javascript">
+		
+		setTimeout(function () {
+			$("#home-loader").css("display", "none");
+			// $("#home-loader").css("background", "gray");
+			$("#main").fadeIn(2000);
+		}, 3000);
+
 		$(".btn-arrivee").on("click", function () {
 			window.curr_tag = this;
 			$.ajax({

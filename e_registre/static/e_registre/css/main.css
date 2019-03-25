@@ -1,4 +1,4 @@
-body { padding-top: 70px; }
+body { /* padding-top: 70px; */ }
 
 /*.optional-settings select {*/
 /*display: inline;*/
@@ -116,4 +116,28 @@ footer .social-icons ul.list-inline li.social-google-plus a {
 
 .heure-depart .heure-arrivee{
     display: block !important;
+}
+
+#home-loader{
+    /*display: none;*/
+    background : gray;
+    opacity: 0.8;
+    width: 100%;
+    height: 100%;
+}
+
+#home-loader img{
+    margin: auto;
+    display: block;
+}
+#gif-img{
+    position: absolute;
+    left: 35%;
+    top: 40%;
+}
+#main{
+    display: none;
+}
+#parchemin{
+    height: 800px;
 }

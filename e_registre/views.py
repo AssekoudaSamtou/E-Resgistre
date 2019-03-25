@@ -38,7 +38,6 @@ def detail(request, categorie, id):
 	visites = Visite.objects.filter(visiteur=personne)
 	# personne.save()
 	return render(request, 'e_registre/detail.html', {'visites': visites, "visiteur": personne})
- 
 
 def home(request):
 	if request.method == "GET":
